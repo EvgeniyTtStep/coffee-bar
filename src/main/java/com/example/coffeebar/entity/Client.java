@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Set;
 
@@ -40,8 +39,8 @@ public class Client {
     private Date birthday;
 
     @Basic
-    @Column(name = "sale", nullable = true, precision = 2)
-    private Integer sale;
+    @Column(name = "discount", nullable = true, precision = 2)
+    private Integer discount;
 
     @OneToMany(mappedBy = "client")
     Set<Order> orderSet;
