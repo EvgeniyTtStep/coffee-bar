@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Add client</title>
+</head>
+<body>
+
+
+<form action="/client/add" method="post" th:object="${client}">
+
+    <input type="text" th:field="*{idClient}" hidden="hidden"> <br>
+    <input type="text" th:field="*{name}" placeholder="name"> <br>
+    <input type="tel" th:field="*{phone}" placeholder="phone"><br>
+    <input type="text" th:field="*{address}" placeholder="address"><br>
+    <input type="date" th:field="*{birthday}" placeholder="birthday"><br>
+    <input type="number" th:field="*{sale}" placeholder="discount"><br>
+
+    <label th:if="${client.idClient == null}">
+        <input type="submit" value="Add client">
+    </label>
+    <label th:unless="${client.idClient == null}">
+        <input type="submit" value="Update client">
+    </label>
+</form>
+
+
+</body>
+</html>
