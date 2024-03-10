@@ -10,7 +10,6 @@ import java.util.List;
 @Service
 public class ClientService {
 
-
     private ClientRepository clientRepository;
 
     @Autowired
@@ -24,11 +23,9 @@ public class ClientService {
         }
     }
 
-
     public List<Client> getAll() {
         return clientRepository.findAll();
     }
-
     public Client findById(Long idClient) {
         return clientRepository.findById(idClient).orElse(new Client());
     }

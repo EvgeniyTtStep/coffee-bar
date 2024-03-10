@@ -40,4 +40,12 @@ public class Personal {
             joinColumns = @JoinColumn(name = "personal_id"),
             inverseJoinColumns = @JoinColumn(name = "graphiks_id"))
     Set<Graphic> graphicSet;
+
+    public Personal(String name, String phone, String address) {
+        this.name = name;
+        this.phone = phone;
+        this.address = address;
+    }
+
+
 }

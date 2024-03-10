@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Personal</title>
+</head>
+<body>
+
+<h2 style="color: red" th:if="${err}" th:text="${err}"></h2>
+
+<form action="/personal/add" method="post" th:object="${personal}">
+
+    <input type="text" th:field="*{idPersonal}" hidden="hidden"> <br>
+    <input type="text" th:field="*{name}" placeholder="name"> <br>
+    <input type="tel" th:field="*{phone}" placeholder="phone"><br>
+    <input type="text" th:field="*{address}" placeholder="address"><br>
+
+    <select name="id_position" id="position">
+        <option value="">-</option>
+        <option th:each="position: ${positions}" th:value="${position.getIdPosition()}" th:text="${position.getName()}"></option>
+    </select>
+
+    <br>
+
+    <label th:if="${personal.idPersonal == null}">
+        <input type="submit" value="Add personal">
+    </label>
+    <label th:unless="${personal.idPersonal == null}">
+        <input type="submit" value="Update personal">
+    </label>
+</form>
+
+</body>
+</html>
