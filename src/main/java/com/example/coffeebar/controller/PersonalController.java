@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -84,12 +86,43 @@ public class PersonalController {
 
 
     @PostMapping("/personal/positions")
-    public String getPersonalByPositions(@RequestParam(name = "selectedPosition") List<String> positionList) {
-        for (String position : positionList) {
-            System.out.println("position = " + position);
-        }
+    public String getPersonalByPositions(@RequestParam(name = "selectedPosition", required = false) List<String> positionList,
+                                         @RequestParam(name = "sort", required = false) Integer num, Model model) {
+        if (positionList != null) {
+            List<Personal> personalList = personalService.getPersonalByPositions(positionList);
+            List<Position> positions = new ArrayList<>();
 
-        return "";
+            for (Personal personal : personalList) {
+                positions.add(personal.getPosition());
+            }
+
+            if (num != null) {
+                switch (num) {
+                    case 1 -> personalList.sort(Comparator.comparing(Personal::getName));
+                    case 2 -> personalList.sort(Comparator.comparing(Personal::getPhone));
+                }
+            }
+            model.addAttribute("personals", personalList);
+            model.addAttribute("selectedPosition", positions);
+            model.addAttribute("selected", num);
+            model.addAttribute("positions", personalService.getAllPositions());
+
+            return "personals";
+
+        } else if (num != 0) {
+            List<Personal> personalList = personalService.getAllPersonal();
+            switch (num) {
+                case 1 -> personalList.sort(Comparator.comparing(Personal::getName));
+                case 2 -> personalList.sort(Comparator.comparing(Personal::getPhone));
+            }
+            model.addAttribute("personals", personalList);
+            model.addAttribute("selected", num);
+            model.addAttribute("positions", personalService.getAllPositions());
+
+            return "personals";
+        } else {
+            return "redirect:/personal/all";
+        }
     }
 
 }

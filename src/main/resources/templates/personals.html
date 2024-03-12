@@ -10,18 +10,25 @@
 
 
 <form action="/personal/positions" method="post">
-    <ul >
+    <ul>
         <li th:each="position : ${positions}">
             <div>
-                <input type="checkbox" th:name="selectedPosition" th:value="${position.name}">
-<!--                       th:checked="${selectedCategories!=null && selectedCategories.contains(category)}">-->
+                <input type="checkbox" th:name="selectedPosition" th:value="${position.name}"
+                       th:checked="${selectedPosition!=null && selectedPosition.contains(position)}">
                 <span th:text="${position.name}"></span>
             </div>
         </li>
     </ul>
+
+    <select name="sort">
+        <option value="0">ID</option>
+        <option value="1" th:selected="${selected==1 and selected!=null}">Name</option>
+        <option value="2" th:selected="${selected==2 and selected!=null}">Phone</option>
+    </select>
+
+
     <input type="submit" value="Show">
 </form>
-
 
 
 <table>
