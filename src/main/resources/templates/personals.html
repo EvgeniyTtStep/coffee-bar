@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Personals</title>
+</head>
+<body>
+
+<h2>Personals</h2>
+
+
+<form action="/personal/positions" method="post">
+    <ul >
+        <li th:each="position : ${positions}">
+            <div>
+                <input type="checkbox" th:name="selectedPosition" th:value="${position.name}">
+<!--                       th:checked="${selectedCategories!=null && selectedCategories.contains(category)}">-->
+                <span th:text="${position.name}"></span>
+            </div>
+        </li>
+    </ul>
+    <input type="submit" value="Show">
+</form>
+
+
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Update</th>
+    </tr>
+    <tr th:each="personal: ${personals}">
+        <td th:text="${personal.getName()}"></td>
+        <td th:text="${personal.getPosition().getName()}"></td>
+        <td th:text="${personal.getPhone()}"></td>
+        <td th:text="${personal.getAddress()}"></td>
+
+        <td><a th:href="@{/personal/update/{id}(id=${personal.getIdPersonal()})}">Update</a></td>
+    </tr>
+</table>
+
+</body>
+</html>

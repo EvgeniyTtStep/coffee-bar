@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class PersonalController {
 
@@ -24,6 +26,13 @@ public class PersonalController {
         this.personalService = personalService;
     }
 
+
+    @GetMapping("/personal/all")
+    public String getAllPersonal(Model model) {
+        model.addAttribute("personals", personalService.getAllPersonal());
+        model.addAttribute("positions", personalService.getAllPositions());
+        return "personals";
+    }
 
     @GetMapping("/personal/add")
     public String add(Model model) {
@@ -67,10 +76,20 @@ public class PersonalController {
 
 
     @GetMapping("/personal/graphic/add")
-    public String addGraphics(Model model){
+    public String addGraphics(Model model) {
         model.addAttribute("personals", personalService.getAllPersonal());
         model.addAttribute("personals", personalService.getAllGraphics());
         return "personal_graphic";
+    }
+
+
+    @PostMapping("/personal/positions")
+    public String getPersonalByPositions(@RequestParam(name = "selectedPosition") List<String> positionList) {
+        for (String position : positionList) {
+            System.out.println("position = " + position);
+        }
+
+        return "";
     }
 
 }
