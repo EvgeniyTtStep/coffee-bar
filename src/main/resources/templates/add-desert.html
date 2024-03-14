@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Desert</title>
+</head>
+<body>
+
+<form action="/desert/add" method="post" th:object="${desert}">
+
+    <input type="text" th:field="*{idDesert}" hidden="hidden"> <br>
+    <input type="text" th:field="*{nameUa}" placeholder="name Ua"> <br>
+    <input type="text" th:field="*{nameEn}" placeholder="name En"><br>
+    <input type="text" th:field="*{price}" placeholder="price"><br>
+
+    <label th:if="${desert.idDesert == null}">
+        <input type="submit" value="Add desert">
+    </label>
+    <label th:unless="${desert.idDesert == null}">
+        <input type="submit" value="Update desert">
+    </label>
+</form>
+
+
+</body>
+</html>

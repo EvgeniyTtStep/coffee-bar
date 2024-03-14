@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>UpdateDrink Price</title>
+</head>
+<body>
+<form th:action="@{/drink/updatePrice/{id}(id=${drink.getIdDrink()})}" method="post">
+    <input type="text" name="price" th:value="${drink.getPrice()}" placeholder="price"><br>
+    <input type="submit" value="Update Price">
+</form>
+
+</body>
+</html>

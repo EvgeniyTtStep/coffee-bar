@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonalService {
@@ -78,5 +79,10 @@ public class PersonalService {
         personalList.sort(Comparator.comparing(Personal::getIdPersonal));
 
         return personalList;
+    }
+
+    public Personal findById(Long idPersonal) {
+        Optional<Personal> byId = personalRepository.findById(idPersonal);
+        return byId.get();
     }
 }

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+</head>
+<body>
+<h2>Menu</h2>
+
+
+<h4><u>Drink Menu</u></h4>
+<table>
+    <tr>
+        <th>Name ua</th>
+        <th>Name en</th>
+        <th>Price</th>
+        <th>Update Price</th>
+        <th>Update All Drink Menu</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="drink: ${drinks}">
+        <td th:text="${drink.getNameUa()}"></td>
+        <td th:text="${drink.getNameEn()}"></td>
+        <td th:text="${drink.getPrice}"></td>
+
+        <td><a th:href="@{/drink/updatePrice/{id}(id=${drink.getIdDrink()})}">Update Price</a></td>
+
+        <td>
+            <form th:action="@{/drink/updatePrice/{id}(id=${drink.getIdDrink()})}" method="post">
+                <input type="number" max="1000" th:value="${drink.getPrice()}" name="price">
+                <input type="submit" value="Update price">
+            </form>
+        </td>
+
+
+        <td><a th:href="@{/drink/updateDrink/{id}(id=${drink.getIdDrink()})}">Update Drink</a></td>
+        <td><a th:href="@{/drink/delete/{id}(id=${drink.getIdDrink()})}">Delete</a></td>
+    </tr>
+</table>
+
+<h4><u>Desert Menu</u></h4>
+<table>
+    <tr>
+        <th>Name ua</th>
+        <th>Name en</th>
+        <th>Price</th>
+        <th>Update Price</th>
+        <th>Update All Desert Menu</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="desert: ${deserts}">
+        <td th:text="${desert.getNameUa()}"></td>
+        <td th:text="${desert.getNameEn()}"></td>
+        <td th:text="${desert.getPrice()}"></td>
+        <td><a th:href="@{/desert/updatePrice/{id}(id=${desert.getIdDesert()})}">Uodate Price</a></td>
+        <td><a th:href="@{/desert/updateDesert/{id}(id=${desert.getIdDesert()})}">Update Desert</a></td>
+        <td><a th:href="@{/desert/delete/{id}(id=${desert.getIdDesert()})}">Delete</a></td>
+    </tr>
+</table>
+
+<br>
+
+<a href="/drink/add">Add New Drink</a><br>
+<a href="/desert/add">Add New Desert</a><br>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update price</title>
+</head>
+<body>
+
+<form action="/desert/add" method="post" th:object="${desert}">
+    <input type="text" th:field="*{idDesert}" hidden="hidden"> <br>
+    <input type="text" th:field="*{nameUa}" hidden="hidden"> <br>
+    <input type="text" th:field="*{nameEn}" hidden="hidden"><br>
+    <input type="text" th:field="*{price}" placeholder="price"><br>
+    <label th:unless="${desert.idDesert == null}">
+        <input type="submit" value="Update Price">
+    </label>
+</form>
+</body>
+</html>

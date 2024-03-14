@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Drink</title>
+</head>
+<body>
+
+<form action="/drink/add" method="post" th:object="${drink}">
+
+    <input type="text" th:field="*{idDrink}" hidden="hidden"> <br>
+    <input type="text" th:field="*{nameUa}" placeholder="name Ua"> <br>
+    <input type="text" th:field="*{nameEn}" placeholder="name En"><br>
+    <input type="text" th:field="*{price}" placeholder="price"><br>
+
+    <label th:if="${drink.idDrink == null}">
+        <input type="submit" value="Add Drink">
+    </label>
+    <label th:unless="${drink.idDrink == null}">
+        <input type="submit" value="Update Drink">
+    </label>
+</form>
+
+</body>
+</html>

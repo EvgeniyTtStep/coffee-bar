@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="/order/add">
+    <select name="id_client" id="client">
+        <option th:each="client: ${clients}" th:value="${client.getIdClient()}" th:text="${client.getName()}"></option>
+    </select>
+
+    <br>
+
+    <select name="id_personal" id="personal">
+        <option th:each="pers: ${personal}" th:value="${pers.getIdPersonal()}" th:text="${pers.getName()}"></option>
+    </select>
+
+    <input type="submit" value="Go to order">
+</form>
+</body>
+</html>

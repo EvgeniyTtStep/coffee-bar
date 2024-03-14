@@ -13,10 +13,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Table(name = "order")
+@Table(name = "orders")
 @Component
 public class Order {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

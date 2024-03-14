@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+</head>
+<body>
+<h2>Menu</h2>
+
+
+<h4><u>Drink Menu</u></h4>
+<table>
+    <tr>
+        <th>Name ua</th>
+        <th>Name en</th>
+        <th>Price</th>
+        <th>Update Price</th>
+        <th>Update All Drink Menu</th>
+        <th>Delete</th>
+    </tr>
+        <tr th:each="drink: ${drinks}">
+            <td th:text="${drink.getNameUa()}"></td>
+            <td th:text="${drink.getNameEn()}"></td>
+            <td th:text="${drink.getPrice()}"></td>
+            <td><a th:href="@{/order/updateDrink/{id_drink}/{id_order}(id_drink=${drink.getIdDrink()},id_order=${order.getIdOrder()})}">Add drink to order</a></td>
+            <td><a th:href="@{/order/deleteDreink/{id}(id=${drink.getIdDrink()})}">Delete drink from order</a></td>
+        </tr>
+</table>
+
+<h4><u>Desert Menu</u></h4>
+<table>
+    <tr>
+        <th>Name ua</th>
+        <th>Name en</th>
+        <th>Price</th>
+        <th>Update Price</th>
+        <th>Update All Desert Menu</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="desert: ${deserts}">
+        <td th:text="${desert.getNameUa()}"></td>
+        <td th:text="${desert.getNameEn()}"></td>
+        <td th:text="${desert.getPrice()}"></td>
+        <td><a th:href="@{/order/updateDesert/{id}(id=${desert.getIdDesert()})}">Add desert to order</a></td>
+        <td><a th:href="@{/order/deleteDesert/{id}(id=${desert.getIdDesert()})}">Delete desert from order</a></td>
+    </tr>
+</table>
+<br>
+
+
+</body>
+</html>
