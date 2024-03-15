@@ -23,16 +23,15 @@
         <th>Name ua</th>
         <th>Name en</th>
         <th>Price</th>
-        <th>Update Price</th>
-        <th>Update All Drink Menu</th>
+        <th>Add Drink</th>
         <th>Delete</th>
     </tr>
         <tr th:each="drink: ${drinks}">
             <td th:text="${drink.getNameUa()}"></td>
             <td th:text="${drink.getNameEn()}"></td>
             <td th:text="${drink.getPrice()}"></td>
-            <td><a th:href="@{/order/updateDrink/{id_drink}/{id_order}(id_drink=${drink.getIdDrink()},id_order=${order.getIdOrder()})}">Add drink to order</a></td>
-            <td><a th:href="@{/order/deleteDreink/{id}(id=${drink.getIdDrink()})}">Delete drink from order</a></td>
+            <td><a th:href="@{/order/updateDrink/{id_drink}/{id_order}(id_drink=${drink.getIdDrink()},id_order=${order.getIdOrder()})}">Add drink</a></td>
+            <td><a th:href="@{/order/deleteDreink/{id}(id=${drink.getIdDrink()})}">Delete drink</a></td>
         </tr>
 </table>
 
@@ -55,6 +54,26 @@
     </tr>
 </table>
 <br>
+
+<h4><u>Order</u></h4>
+<table>
+    <tr>
+        <th>Name ua</th>
+        <th>Name en</th>
+        <th>Price</th>
+    </tr>
+    <tr th:if="${order.getDesertSet() != null}" th:each="desert: ${order.getDesertSet()}">
+        <td th:text="${desert.getNameUa()}"></td>
+        <td th:text="${desert.getNameEn()}"></td>
+        <td th:text="${desert.getPrice()}"></td>
+    </tr>
+    <tr th:if="${order.getDrinkSet() != null}" th:each="drink: ${order.getDrinkSet()}">
+        <td th:text="${drink.getNameUa()}"></td>
+        <td th:text="${drink.getNameEn()}"></td>
+        <td th:text="${drink.getPrice()}"></td>
+    </tr>
+</table>
+
 
 
 </body>

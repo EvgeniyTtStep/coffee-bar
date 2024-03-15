@@ -91,17 +91,21 @@ public class OrderController {
         model.addAttribute("drinks", menuService.getAllDrinks());
         model.addAttribute("deserts", menuService.getAllDeserts());
         model.addAttribute("personal", personalService.getAllPersonal());
+//
+//        for (Drink drink : order.getDrinkSet()) {
+//            System.out.println("drink = " + drink.getNameEn());
+//        }
+
         return "add-order";
     }
 
 
     @GetMapping("/order/updateDrink/{id_drink}/{id_order}")
     public String addDrinkToOrder(@PathVariable("id_drink") Long id_drink,
-                                  @PathVariable("id_order") Long id_order,
-                                  Model model) {
+                                  @PathVariable("id_order") Long id_order) {
         Drink drink = menuService.getDrinkById(id_drink);
         Order order = orderService.findById(id_order);
-        Set<Drink> drinkSet = new HashSet<>();
+        Set<Drink> drinkSet = order.getDrinkSet();
         drinkSet.add(drink);
         order.setDrinkSet(drinkSet);
         orderService.save(order);
