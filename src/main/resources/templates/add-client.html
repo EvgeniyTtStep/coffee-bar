@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/" >
 <head>
     <meta charset="UTF-8">
     <title>Add client</title>
 </head>
 <body>
+
+<h1 th:inline="text">Hello <span th:remove="tag" th:authentication="name">thymeleaf</span>!</h1>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
 
 
 <form action="/client/add" method="post" th:object="${client}">

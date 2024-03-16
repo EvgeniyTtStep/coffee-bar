@@ -6,6 +6,12 @@
 </head>
 <body>
 
+
+<h1 th:inline="text">Hello <span th:remove="tag" th:authentication="name">thymeleaf</span>!</h1>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+
 <h2 style="color: red" th:if="${err}" th:text="${err}"></h2>
 
 <form action="/personal/add" method="post" th:object="${personal}">

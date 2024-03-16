@@ -91,10 +91,6 @@ public class OrderController {
         model.addAttribute("drinks", menuService.getAllDrinks());
         model.addAttribute("deserts", menuService.getAllDeserts());
         model.addAttribute("personal", personalService.getAllPersonal());
-//
-//        for (Drink drink : order.getDrinkSet()) {
-//            System.out.println("drink = " + drink.getNameEn());
-//        }
 
         return "add-order";
     }
