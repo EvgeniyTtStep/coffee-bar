@@ -1,9 +1,10 @@
 package com.example.coffeebar.controller;
 
 
-import com.example.coffeebar.entity.Personal;
-import com.example.coffeebar.entity.Position;
+import com.example.coffeebar.entity.*;
+import com.example.coffeebar.repository.RoleRepository;
 import com.example.coffeebar.service.PersonalService;
+import com.example.coffeebar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import javax.management.relation.RoleNotFoundException;
+import java.util.*;
 
 @Controller
 public class PersonalController {
@@ -22,6 +22,20 @@ public class PersonalController {
 
     private PersonalService personalService;
 
+    private RoleRepository roleRepository;
+
+    private UserService userService;
+
+
+    @Autowired
+    public void setRoleRepository(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Autowired
     public void setPersonalService(PersonalService personalService) {
@@ -40,7 +54,7 @@ public class PersonalController {
     public String add(Model model) {
         model.addAttribute("personal", new Personal());
         model.addAttribute("positions", personalService.getAllPositions());
-        return "add-personal";
+        return "admin/add-personal";
     }
 
 //    @PostMapping("/personal/add")
@@ -62,17 +76,34 @@ public class PersonalController {
 
     @PostMapping("/personal/add")
     public String add(@ModelAttribute Personal personal,
+                      @RequestParam(name = "username") String username,
+                      @RequestParam(name = "email") String email,
+                      @RequestParam(name = "password") String password,
                       @RequestParam(name = "id_position") Long idPosition,
-                      Model model) {
+                      Model model) throws RoleNotFoundException {
 
-        Personal personalByPhone = personalService.getPersonalByPhone(personal.getPhone());
-        if (personalByPhone != null) {
-            model.addAttribute("err", "Користувач з таким номером вже існує");
+            User userByEmail = userService.findUserByEmail(email);
+        if (userByEmail != null) {
+            model.addAttribute("err", "User vs email " + email + " exist in database");
             model.addAttribute("personal", personal);
             model.addAttribute("positions", personalService.getAllPositions());
-            return "add-personal";
+            return "admin/add-personal";
+        } else {
+            Personal personalByPhone = personalService.getPersonalByPhone(personal.getPhone());
+            if (personalByPhone != null) {
+                model.addAttribute("err", "Користувач з таким номером вже існує");
+                model.addAttribute("personal", personal);
+                model.addAttribute("positions", personalService.getAllPositions());
+                return "admin/add-personal";
+            } else {
+                User newUser = new User(personal.getName(), username, email, password);
+                Role role = roleRepository.findRoleByName(ERole.ROLE_PERSONAL)
+                        .orElseThrow(() -> new RoleNotFoundException("Role not found"));
+                newUser.setRoles(new HashSet<>(List.of(role)));
+                personalService.save(personal, idPosition);
+                userService.adminSave(newUser);
+            }
         }
-        personalService.save(personal, idPosition);
         return "index";
     }
 

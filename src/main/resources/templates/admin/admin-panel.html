@@ -36,16 +36,11 @@
 <body>
 
 <ul>
-    <li><a href="/order/add/client">Create order</a></li>
+    <li><a href="/client/all">All Clients</a></li>
+    <li><a href="/personal/all">All Personal</a></li>
+    <li><a href="/personal/add">Add New Personal</a></li>
+    <li><a href="/personal/graphic/add">Add Graphics</a></li>
     <li><a href="/menu"> Menu </a></li>
-    <li><a href="/registration">Registration</a></li>
-    <li><a href="/login">Login</a></li>
-    <li th:if="${user != null}">
-        <div th:each="role:${user.getRoles()}">
-            <a th:if="${role.getName().name().equals('ROLE_ADMIN')}" href="/admin">Admin</a>
-            <a th:if="${role.getName().name().equals('ROLE_PERSONAL')}" href="/admin">Personal</a>
-        </div>
-    </li>
 
 </ul>
 

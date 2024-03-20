@@ -6,6 +6,7 @@ import com.example.coffeebar.entity.User;
 import com.example.coffeebar.repository.RoleRepository;
 import com.example.coffeebar.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,17 @@ public class UserService {
     }
 
 
+    public User adminSave(User user) throws RoleNotFoundException {
+        if (user != null) {
+            User saveUser = user;
+            saveUser.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.save(saveUser);
+            return saveUser;
+        }
+        return user;
+    }
+
+
     public User save(User user) throws RoleNotFoundException {
         if (user != null) {
             User saveUser = user;
@@ -45,4 +57,13 @@ public class UserService {
     }
 
 
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email).orElse(null);
+        //.orElseThrow(() -> new UsernameNotFoundException("User vs email " + email + " not found"));
+    }
+
+
+    public User findUserByUsername(String principalName) {
+        return userRepository.findUserByUsername(principalName).orElse(null);
+    }
 }

@@ -9,13 +9,31 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.resource.HttpResource;
 
 import javax.management.relation.RoleNotFoundException;
+import java.net.http.HttpResponse;
+import java.security.Principal;
 
 @Controller
 public class AuthController {
 
     private final UserService userService;
+
+
+    @GetMapping("/")
+    public String index(Principal principal, Model model) {
+
+        if (principal != null) {
+            String principalName = principal.getName();
+            User userByUsername = userService.findUserByUsername(principalName);
+            if (userByUsername != null) {
+                System.out.println("userByUsername = " + userByUsername.getUsername());
+                model.addAttribute("user", userByUsername);
+            }
+        }
+        return "index";
+    }
 
 
     @Autowired

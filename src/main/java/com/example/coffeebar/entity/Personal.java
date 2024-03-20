@@ -25,6 +25,8 @@ public class Personal {
 
     String phone;
 
+    String email;
+
     String address;
 
     @OneToMany(mappedBy = "personal")
