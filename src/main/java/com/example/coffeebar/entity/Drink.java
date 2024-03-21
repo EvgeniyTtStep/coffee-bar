@@ -35,6 +35,10 @@ public class Drink {
     private BigDecimal price;
 
     @ManyToMany(mappedBy = "drinkSet")
-    Set<Order> orderSet;
+    private Set<Order> orderSet;
+
+    @ManyToOne
+    @JoinColumn(name = "image_id", nullable = false)
+    private Image image;
 
 }

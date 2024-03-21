@@ -40,6 +40,7 @@
     <li><a href="/menu"> Menu </a></li>
     <li><a href="/registration">Registration</a></li>
     <li><a href="/login">Login</a></li>
+
     <li th:if="${user != null}">
         <div th:each="role:${user.getRoles()}">
             <a th:if="${role.getName().name().equals('ROLE_ADMIN')}" href="/admin">Admin</a>

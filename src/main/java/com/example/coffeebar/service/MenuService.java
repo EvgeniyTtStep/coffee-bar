@@ -15,7 +15,8 @@ public class MenuService {
     private final DrinkRepository drinkRepository;
 
     private final DesertRepository desertRepository;
-@Autowired
+
+    @Autowired
     public MenuService(DrinkRepository drinkRepository, DesertRepository desertRepository) {
         this.drinkRepository = drinkRepository;
         this.desertRepository = desertRepository;
@@ -51,7 +52,7 @@ public class MenuService {
     }
 
     public Drink findByIdDrink(Long idDrink) {
-        return drinkRepository.findById(idDrink).orElse(new Drink());
+        return drinkRepository.findDrinkByIdDrink(idDrink).orElse(new Drink());
     }
 
     public Desert findByIdDesert(Long idDesert) {
@@ -61,6 +62,7 @@ public class MenuService {
     public void deleteByIdDrink(Long idDrink) {
         drinkRepository.deleteById(idDrink);
     }
+
     public void deleteByIdDesert(Long idDesert) {
         desertRepository.deleteById(idDesert);
     }
