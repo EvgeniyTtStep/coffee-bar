@@ -31,6 +31,9 @@ public class User implements UserDetails {
     String email;
     String password;
 
+    boolean confirm;
+
+
     public User(String name, String username, String email, String password) {
         this.name = name;
         this.username = username;

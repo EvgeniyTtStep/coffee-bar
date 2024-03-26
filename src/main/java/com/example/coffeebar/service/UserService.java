@@ -3,10 +3,11 @@ package com.example.coffeebar.service;
 import com.example.coffeebar.entity.ERole;
 import com.example.coffeebar.entity.Role;
 import com.example.coffeebar.entity.User;
+import com.example.coffeebar.entity.VerificationToken;
 import com.example.coffeebar.repository.RoleRepository;
+import com.example.coffeebar.repository.TokenRepository;
 import com.example.coffeebar.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +23,16 @@ public class UserService {
     private final RoleRepository roleRepository;
 
 
+    private final TokenRepository tokenRepository;
+
+
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, VerificationToken verificationToken, TokenRepository tokenRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.tokenRepository = tokenRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -65,5 +70,25 @@ public class UserService {
 
     public User findUserByUsername(String principalName) {
         return userRepository.findUserByUsername(principalName).orElse(null);
+    }
+
+    public void createVerificationToken(User user, String token) {
+        VerificationToken verificationToken = new VerificationToken(token, user.getId());
+        tokenRepository.save(verificationToken);
+    }
+
+
+    public User getUserByToken(String token) {
+        return userRepository.findUserById(tokenRepository.findVerificationTokenByToken(token).getUserId()).get();
+    }
+
+
+    public VerificationToken getVerificationToken(String token) {
+        return tokenRepository.findVerificationTokenByToken(token);
+    }
+
+
+    public VerificationToken getTokenByUserId(Long userId) {
+        return tokenRepository.findVerificationTokenByUserId(userId);
     }
 }
