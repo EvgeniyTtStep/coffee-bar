@@ -39,4 +39,18 @@ public class MyMailSender {
         mailSender.send(email);
     }
 
+    public void confirmPassword(String mail, User user) {
+        String token = UUID.randomUUID().toString();
+        userService.createVerificationToken(user, token);
+
+        String confirmURL = "/restorePassword?token=" + token + "&user_id=" + user.getId();
+        String msg = "Перейдіть за цим посиланням для відновлення паролю";
+
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(mail);
+        email.setFrom("46program@ukr.net");
+        email.setSubject("Password Confirmation");
+        email.setText(msg + " " + "http://localhost:8080" + confirmURL);
+        mailSender.send(email);
+    }
 }

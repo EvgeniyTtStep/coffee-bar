@@ -5,9 +5,11 @@ import com.example.coffeebar.entity.Drink;
 import com.example.coffeebar.entity.Image;
 import com.example.coffeebar.service.ImageService;
 import com.example.coffeebar.service.MenuService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,8 +48,11 @@ public class MenuController {
     }
 
     @PostMapping("/drink/add")
-    public String addDrink(@ModelAttribute Drink drink,
+    public String addDrink(@Valid @ModelAttribute Drink drink, BindingResult bindingResult,
                            @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+        if(bindingResult.hasErrors()){
+            return "admin/add-drink";
+        }
         if (file != null) {
             Image image = new Image();
             image.setName(file.getOriginalFilename());

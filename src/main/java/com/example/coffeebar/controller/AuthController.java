@@ -78,9 +78,50 @@ public class AuthController {
         }
         User userByToken = userService.getUserByToken(token);
         userByToken.setConfirm(true);
-        userService.save(userByToken);
+        userService.saveRegisteredUser(userByToken);
         return "redirect:/";
     }
 
+
+    @GetMapping("/confirmPassword")
+    public String confirmPasswordEmail() {
+        return "confirm-password-email";
+    }
+
+    @PostMapping("/confirmPassword")
+    public String confirmPasswordEmail(@RequestParam(name = "email") String email, Model model) {
+
+        User userByEmail = userService.findUserByEmail(email);
+        if (userByEmail == null) {
+            model.addAttribute("err", "User not found");
+            return "confirm-password-email";
+        } else {
+            myMailSender.confirmPassword(email, userByEmail);
+            return "confirm";
+        }
+    }
+
+    @GetMapping("/restorePassword")
+    public String confirmPassword(@RequestParam(name = "token") String token,
+                                  @RequestParam(name = "user_id") Long userId,
+                                  Model model) {
+        VerificationToken verificationToken = userService.getVerificationToken(token);
+        if (verificationToken == null) {
+            model.addAttribute("tokenError", "Token is not valid");
+            return "error";
+        }
+        System.out.println("restorePassword userId = " + userId);
+        model.addAttribute("user_id", userId);
+        return "confirm-password";
+    }
+
+    @PostMapping("/newPassword")
+    public String confirmNewPassword(@RequestParam(name = "password") String password,
+                                  @RequestParam(name = "user_id") Long userId) {
+        User userById = userService.findUserById(userId);
+        userById.setPassword(password);
+        userService.saveUserPassword(userById);
+        return "redirect:/";
+    }
 
 }

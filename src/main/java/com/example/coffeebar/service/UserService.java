@@ -62,6 +62,14 @@ public class UserService {
     }
 
 
+    public User saveRegisteredUser(User user) {
+        if (user != null) {
+            return userRepository.save(user);
+        }
+        return null;
+    }
+
+
     public User findUserByEmail(String email) {
         return userRepository.findUserByEmail(email).orElse(null);
         //.orElseThrow(() -> new UsernameNotFoundException("User vs email " + email + " not found"));
@@ -90,5 +98,17 @@ public class UserService {
 
     public VerificationToken getTokenByUserId(Long userId) {
         return tokenRepository.findVerificationTokenByUserId(userId);
+    }
+
+    public User findUserById(Long userId) {
+        return userRepository.findUserById(userId).get();
+    }
+
+    public User saveUserPassword(User user) {
+        if (user != null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            return userRepository.save(user);
+        }
+        return null;
     }
 }

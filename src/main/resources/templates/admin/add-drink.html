@@ -3,15 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Add New Drink</title>
+
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 
 <form th:action="@{/drink/add}" method="post" th:object="${drink}" enctype="multipart/form-data">
 
     <input type="text" th:field="*{idDrink}" hidden="hidden"> <br>
+
+    <div th:if="${#fields.hasErrors('nameUa')}" th:errors="*{nameUa}" th:errorclass="error"></div>
     <input type="text" th:field="*{nameUa}" placeholder="name Ua"> <br>
+
+    <div th:if="${#fields.hasErrors('nameEn')}" th:errors="*{nameEn}" th:errorclass="error"></div>
     <input type="text" th:field="*{nameEn}" placeholder="name En"><br>
+
+    <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
     <input type="text" th:field="*{price}" placeholder="price"><br>
+
     <input type="file" name="file" accept="image/*" placeholder="Upload image"><br>
 
     <label th:if="${drink.idDrink == null}">
