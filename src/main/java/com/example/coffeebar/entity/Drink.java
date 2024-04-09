@@ -38,7 +38,7 @@ public class Drink {
     @Column(name = "price", nullable = false, precision = 2)
     private BigDecimal price;
 
-    @ManyToMany(mappedBy = "drinkSet")
+    @ManyToMany(mappedBy = "drinkSet", fetch = FetchType.LAZY)
     private Set<Order> orderSet;
 
     @ManyToOne

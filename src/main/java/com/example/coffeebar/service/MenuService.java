@@ -45,6 +45,13 @@ public class MenuService {
         }
     }
 
+    public Drink saveRestDrink(Drink drink) {
+        if (drink != null) {
+            return drinkRepository.save(drink);
+        }
+        return null;
+    }
+
     public void saveDesert(Desert desert) {
         if (desert != null) {
             desertRepository.save(desert);

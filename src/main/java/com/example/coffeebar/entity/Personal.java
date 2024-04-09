@@ -29,7 +29,7 @@ public class Personal {
 
     String address;
 
-    @OneToMany(mappedBy = "personal")
+    @OneToMany(mappedBy = "personal",fetch = FetchType.LAZY)
     Set<Order> orderSet;
 
     @ManyToOne
